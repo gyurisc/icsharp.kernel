@@ -70,7 +70,9 @@ namespace ICSharp.Kernel
                     json = File.ReadAllText(fileName);
                     var connectionInformation = JsonConvert.DeserializeObject<ConnectionInformation>(json);
 
+#if DEBUG
                     System.Diagnostics.Debugger.Launch();
+#endif
 
                     // start the kernel
                     kernel = new Kernel(connectionInformation);
