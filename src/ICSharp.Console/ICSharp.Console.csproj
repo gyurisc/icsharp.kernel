@@ -53,9 +53,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Include.csx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="ipython-profile\ipython_config.py">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
