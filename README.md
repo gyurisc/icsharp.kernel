@@ -1,6 +1,6 @@
 # ICSharp.Kernel
 
-This is a [Roslyn](https://github.com/dotnet/roslyn) based C# kernel for [Jupyter](http://jupyter.org/).
+This is a [Roslyn](https://github.com/dotnet/roslyn) based C# kernel for [Jupyter](http://jupyter.org/). View the [Feature Notebook](CSharp_Jupyter_Notebok.ipynp) for features that are currently working in this kernel. 
 
 # Overview 
 
