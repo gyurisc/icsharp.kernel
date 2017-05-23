@@ -131,6 +131,7 @@
     <Compile Include="ConnectionInformation.cs" />
     <Compile Include="Evaluation.cs" />
     <Compile Include="Kernel.cs" />
+    <Compile Include="Messages\BlockType.cs" />
     <Compile Include="Messages\ClearOutput.cs" />
     <Compile Include="Messages\CommInfoRequest.cs" />
     <Compile Include="Messages\CommOpen.cs" />

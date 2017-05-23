@@ -365,6 +365,20 @@ namespace ICSharp.Kernel
 
         public void intellisenseRequest(KernelMessage msg, IntellisenseRequest content)
         {
+            var codeCells = JsonConvert.DeserializeObject<List<String>>(content.text);
+            codeCells.Add(headerCode);
+
+            var position = JsonConvert.DeserializeObject<BlockType>(content.block);
+            var lineOffset = 0;
+           
+            foreach (var line in codeCells.Take(position.selectedIndex + 1))
+            {
+                lineOffset += line.Split('\n').Length;
+            }
+
+            var realLineNumber = position.line + lineOffset + 1;
+            var codeString = string.Join("\n", codeCells);
+
             var newContent = new CompleteReply()
             {
                 matched_text = "matched text",
