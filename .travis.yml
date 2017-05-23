@@ -5,8 +5,7 @@ before_install:
   - mkdir -p .nuget
   - wget -O .nuget/nuget.exe https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
   - mono .nuget/nuget.exe # Output NuGet's version number
-
-  install:
-  - mono .nuget/nuget.exe restore <solution.sln> -Verbosity detailed
+install:
+  - mono .nuget/nuget.exe restore ICSharpKernel.sln -Verbosity detailed
   - mono .nuget/nuget.exe install NUnit.Runners -Version 3.2.1 -OutputDirectory ./src/packages
 
