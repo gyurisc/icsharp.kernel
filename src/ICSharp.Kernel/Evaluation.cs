@@ -85,5 +85,31 @@ namespace ICSharp.Kernel
             if (scriptState.ReturnValue == null) return string.Empty;
             return scriptState.ReturnValue.ToString(); 
         }
+
+        internal static void GetDeclarations(string code, int realLineNumber, int ch)
+        {
+            ScriptState<object> state = null;
+            var scriptFileName = Path.Combine(Environment.CurrentDirectory, "script.csx");
+
+            try
+            {
+                var script = CSharpScript.Create(code, scriptOptions);
+                script.Compile();
+                state = script.RunAsync().Result;
+               
+                if (scriptState.ReturnValue != null && !string.IsNullOrEmpty(scriptState.ReturnValue.ToString()))
+                {
+                    var val = scriptState.ReturnValue.ToString();
+                }
+            }
+            catch (CompilationErrorException compilationError)
+            {
+                foreach (var error in compilationError.Diagnostics)
+                {
+                    //var err.Add(error.ToString());
+                }
+            }
+
+        }
     }
 }

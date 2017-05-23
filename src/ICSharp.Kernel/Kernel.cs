@@ -379,6 +379,9 @@ namespace ICSharp.Kernel
             var realLineNumber = position.line + lineOffset + 1;
             var codeString = string.Join("\n", codeCells);
 
+
+            // TODO: Finish implementing intellisense... 
+            Evaluation.GetDeclarations(codeString, realLineNumber, position.ch);
             var newContent = new CompleteReply()
             {
                 matched_text = "matched text",
@@ -387,7 +390,6 @@ namespace ICSharp.Kernel
                 status = "ok"
             };
 
-            // TODO: More stuff is needed here... 
             sendDisplayData("errors", new object(), "display_data");
             sendMessage(shellSocket, msg, "complete_reply", newContent);
         }
