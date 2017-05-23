@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Text;
 
@@ -36,17 +37,26 @@ namespace ICSharp.Kernel
             ICSharp_32logo = GetBytes("kernel-spec\\logo-32x32.png");
         }
 
-        
+        private static string UpdatePathForPlatform(string path)
+        {
+            var paths = new List<string>();
+
+            paths.Add(basePath);
+            paths.AddRange(path.Split('\\'));
+
+            return Path.Combine(paths.ToArray());
+        }
+
         private static string GetString(string path)
         {
-            var fullPath = Path.Combine(basePath, path);
-            var content = File.ReadAllText(path);
+            var fullPath = UpdatePathForPlatform(path);
+            var content = File.ReadAllText(fullPath);
             return content;
         }
 
         private static byte[] GetBytes(string path)
         {
-            var fullPath = Path.Combine(basePath, path);
+            var fullPath = UpdatePathForPlatform(path);
             return File.ReadAllBytes(fullPath);
         }
     }

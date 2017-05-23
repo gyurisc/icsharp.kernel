@@ -21,9 +21,9 @@ namespace ICSharp.Kernel
         static Config()
         {
             ThisExecutable = System.Reflection.Assembly.GetEntryAssembly().Location;
+			ActualPlatform = GetActualPlatform();
             UserDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            AppData = GetAppData();
-            ActualPlatform = GetActualPlatform();
+            AppData = GetAppData();        
             JupyterDir = GetJupyterDir();
             KernelsDir = Path.Combine(JupyterDir, "kernels");
             KernelDir = Path.Combine(KernelsDir, "icsharpkernel");
