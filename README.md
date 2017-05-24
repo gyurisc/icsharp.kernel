@@ -5,14 +5,22 @@
 
 This is a [Roslyn](https://github.com/dotnet/roslyn) based C# kernel for [Jupyter](http://jupyter.org/). View the [Feature Notebook](CSharp_Jupyter_Notebook.ipynb) for features that are currently working in this kernel. 
 
-# Overview 
-
 # Building 
 
- Open ICSharpKernel.sln in Visual Studio 2017.
+ Open ICSharpKernel.sln in Visual Studio 2017 on Windows or Mac and Build, or from the command line type msbuild.
 
+# Installation (Windows)
+1. Install [Anaconda](http://continuum.io/downloads)
+2. Install [Jupyter](http://jupyter.readthedocs.org/en/latest/install.html)
+3. Clone the repository git clone https://github.com/gyurisc/icsharp.kernel
+4. Build the project
+4. Run IfSharp.exe
 
-# Screens
+# Manual Installation (Mac)
+1. Install [Anaconda](http://continuum.io/downloads)
+2. Install [Jupyter](http://jupyter.readthedocs.org/en/latest/install.html)
+3. Install [Mono](http://www.mono-project.com/download/) (tested 4.2.4)
+...
 
 
 # Todo 
