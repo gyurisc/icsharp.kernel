@@ -12,16 +12,20 @@ This is a [Roslyn](https://github.com/dotnet/roslyn) based C# kernel for [Jupyte
 # Installation (Windows)
 1. Install [Anaconda](http://continuum.io/downloads)
 2. Install [Jupyter](http://jupyter.readthedocs.org/en/latest/install.html)
-3. Clone the repository git clone https://github.com/gyurisc/icsharp.kernel
+3. Download current release [v1.0-beta](https://github.com/gyurisc/icsharp.kernel/releases/download/v1.0-beta/icsharp_kernel_v1.0.zip)
 4. Build the project
-4. Run IfSharp.exe
+4. Run icsharp.exe
 
 # Manual Installation (Mac)
 1. Install [Anaconda](http://continuum.io/downloads)
 2. Install [Jupyter](http://jupyter.readthedocs.org/en/latest/install.html)
 3. Install [Mono](http://www.mono-project.com/download/) (tested 4.2.4)
-...
+4. Download current release [v1.0-beta](https://github.com/gyurisc/icsharp.kernel/releases/download/v1.0-beta/icsharp_kernel_v1.0.zip)
+5. Unzip the release then run `mono icsharp.exe`
+6. If Jupyter is not launched then start manually `jupyter notebook` 
 
+# Manual Installation (Linux)
+TBA
 
 # Todo 
 
