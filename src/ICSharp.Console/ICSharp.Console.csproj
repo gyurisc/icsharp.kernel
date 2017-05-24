@@ -7,8 +7,8 @@
     <ProjectGuid>{72DF0BCE-7B91-49E0-A2B7-1229883FBB2B}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>ICSharp.Console</RootNamespace>
-    <AssemblyName>ICSharp</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <AssemblyName>icsharp</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />

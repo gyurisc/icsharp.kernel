@@ -72,7 +72,7 @@ namespace ICSharp.Kernel
 
 //#if DEBUG
 //                    System.Diagnostics.Debugger.Launch();
-// #endif
+//#endif
 
                     // start the kernel
                     kernel = new Kernel(connectionInformation);
