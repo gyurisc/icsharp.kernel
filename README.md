@@ -14,6 +14,7 @@ This is a [Roslyn](https://github.com/dotnet/roslyn) based C# kernel for [Jupyte
 2. Install [Jupyter](http://jupyter.readthedocs.org/en/latest/install.html)
 3. Download current release [v1.0-beta](https://github.com/gyurisc/icsharp.kernel/releases/download/v1.0-beta/icsharp_kernel_v1.0.zip)
 4. Unzip the release and run `icsharp.exe`
+5. If Jupyter is not launched then start manually `jupyter notebook` 
 
 # Manual Installation (Mac)
 1. Install [Anaconda](http://continuum.io/downloads)
