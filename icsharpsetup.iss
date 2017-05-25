@@ -6,6 +6,7 @@
 #define MyAppPublisher "Krisztian Gyuris"
 #define MyAppURL "https://github.com/gyurisc/icsharp.kernel"
 #define MyAppExeName "icsharp.exe"
+#define BaseDirectory "."
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -33,27 +34,9 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Users\gyurisc\dev\pet-projects\icsharp.kernel\src\ICSharp.Console\bin\Release\icsharp.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\gyurisc\dev\pet-projects\icsharp.kernel\src\ICSharp.Console\bin\Release\AsyncIO.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\gyurisc\dev\pet-projects\icsharp.kernel\src\ICSharp.Console\bin\Release\icsharp.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\gyurisc\dev\pet-projects\icsharp.kernel\src\ICSharp.Console\bin\Release\icsharp.exe.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\gyurisc\dev\pet-projects\icsharp.kernel\src\ICSharp.Console\bin\Release\ICSharp.Kernel.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\gyurisc\dev\pet-projects\icsharp.kernel\src\ICSharp.Console\bin\Release\ICSharp.Kernel.dll.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\gyurisc\dev\pet-projects\icsharp.kernel\src\ICSharp.Console\bin\Release\ICSharp.Kernel.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\gyurisc\dev\pet-projects\icsharp.kernel\src\ICSharp.Console\bin\Release\icsharp.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\gyurisc\dev\pet-projects\icsharp.kernel\src\ICSharp.Console\bin\Release\Include.csx"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\gyurisc\dev\pet-projects\icsharp.kernel\src\ICSharp.Console\bin\Release\Microsoft.CodeAnalysis.CSharp.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\gyurisc\dev\pet-projects\icsharp.kernel\src\ICSharp.Console\bin\Release\Microsoft.CodeAnalysis.CSharp.Scripting.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\gyurisc\dev\pet-projects\icsharp.kernel\src\ICSharp.Console\bin\Release\Microsoft.CodeAnalysis.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\gyurisc\dev\pet-projects\icsharp.kernel\src\ICSharp.Console\bin\Release\Microsoft.CodeAnalysis.Scripting.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\gyurisc\dev\pet-projects\icsharp.kernel\src\ICSharp.Console\bin\Release\NetMQ.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\gyurisc\dev\pet-projects\icsharp.kernel\src\ICSharp.Console\bin\Release\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\gyurisc\dev\pet-projects\icsharp.kernel\src\ICSharp.Console\bin\Release\System.Collections.Immutable.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\gyurisc\dev\pet-projects\icsharp.kernel\src\ICSharp.Console\bin\Release\System.Reflection.Metadata.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\gyurisc\dev\pet-projects\icsharp.kernel\src\ICSharp.Console\bin\Release\System.ValueTuple.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\gyurisc\dev\pet-projects\icsharp.kernel\src\ICSharp.Console\bin\Release\Trinet.Core.IO.Ntfs.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\gyurisc\dev\pet-projects\icsharp.kernel\src\ICSharp.Console\bin\Release\ipython-profile\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\gyurisc\dev\pet-projects\icsharp.kernel\src\ICSharp.Console\bin\Release\kernel-spec\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#BaseDirectory}\src\ICSharp.Console\bin\Release\*"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#BaseDirectory}\src\ICSharp.Console\bin\Release\ipython-profile\*"; DestDir: "{app}\ipython-profile"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#BaseDirectory}\src\ICSharp.Console\bin\Release\kernel-spec\*"; DestDir: "{app}\kernel-spec"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
