@@ -61,6 +61,17 @@ namespace ICSharp.Kernel
 
             try
             {
+                if (code.StartsWith("#help"))
+                {
+                    var icsharpHelp = "IC# notebook directives: " +
+                        "#r\t\tAdd a metadata reference to specified assembly and all its dependencies, e.g. #r \"myLib.dll\"." +
+                        "#load\t\tLoad specified script file and execute it, e.g. #load \"myScript.csx\".";
+
+                    sbPrint.Append(icsharpHelp);
+
+                    return (val, err.ToArray());
+                }
+  
                 scriptState = scriptState == null ? CSharpScript.RunAsync(code,scriptOptions).Result : scriptState.ContinueWithAsync(code, scriptOptions).Result;
                 if (scriptState.ReturnValue != null && !string.IsNullOrEmpty(scriptState.ReturnValue.ToString()))
                 {

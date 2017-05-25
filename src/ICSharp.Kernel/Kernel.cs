@@ -251,9 +251,9 @@ namespace ICSharp.Kernel
 
             if (preprocessing.HelpLines.Length > 0)
             {
-                var icsharpHelp = "IC# notebook directives: " +
-                    "This feature is not yet supported!";
-                pyout(icsharpHelp);
+                var icsharpHelp = "IC# notebook directives: " + Environment.NewLine +
+                    "#r\t\tAdd a metadata reference to specified assembly and all its dependencies, e.g. #r \"myLib.dll\"." + Environment.NewLine +
+                    "#load\t\tLoad specified script file and execute it, e.g. #load \"myScript.csx\".";
             }
 
             if (preprocessing.CsiOutputLines.Length > 0)
@@ -285,9 +285,9 @@ namespace ICSharp.Kernel
             // preprocess
             var newCode = preprocessCode(content.code);
 
-            // evaluate
             if (!String.IsNullOrEmpty(newCode))
             {
+                // evaluate 
                 try
                 {
                     (var value, var errors) = Evaluation.EvalInteractionNonThrowing(newCode);
