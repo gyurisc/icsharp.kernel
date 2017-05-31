@@ -23,7 +23,7 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
 DisableProgramGroupPage=yes
 LicenseFile=LICENSE
-OutputBaseFilename=icsharp_setup
+OutputBaseFilename=setup
 Compression=lzma
 SolidCompression=yes
 
