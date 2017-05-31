@@ -61,10 +61,7 @@ namespace ICSharp.Kernel
                     {
                         Directory.Delete(Config.TempDir, true);
                     }
-
-                    // adds the default display printers
-                    Printers.addDefaultDisplayPrinters();
-
+                    
                     // get connection information
                     fileName = args[0];
                     json = File.ReadAllText(fileName);

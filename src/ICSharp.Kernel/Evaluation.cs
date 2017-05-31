@@ -90,11 +90,9 @@ namespace ICSharp.Kernel
             return (val, err.ToArray());
         }
 
-        internal static string GetLastExpression()
+        internal static object GetLastExpression()
         {
-            if (scriptState == null) return string.Empty;
-            if (scriptState.ReturnValue == null) return string.Empty;
-            return scriptState.ReturnValue.ToString(); 
+            return scriptState?.ReturnValue; 
         }
 
         internal static void GetDeclarations(string code, int realLineNumber, int ch)

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis.CSharp.Scripting.Hosting;
+using Microsoft.CodeAnalysis.Scripting.Hosting;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Web;
@@ -32,84 +34,82 @@ namespace ICSharp.Kernel
 
     public class Printers
     {
+        private static CSharpObjectFormatter formatter = Microsoft.CodeAnalysis.CSharp.Scripting.Hosting.CSharpObjectFormatter.Instance;
+
         internal static string htmlEncode(string str)
         {
             return HttpUtility.HtmlEncode(str);
         }
 
-
-        #region Printers
-        public static BinaryOutput defaultDisplayPrinter(object x)
+        public static BinaryOutput PrintVariable(object input)
         {
-            return new BinaryOutput() { ContentType = "text/plain", Data = x.ToString()};
+            if (input == null)
+            {
+                return new BinaryOutput() { ContentType = "text/plain", Data = string.Empty };
+            }
+
+            BinaryOutput result = null;
+
+            switch (input)
+            {
+                case TableOutput t:
+                    result = PrintTable(t);
+                    break;
+                case SvgOutput svg:
+                    result = PrintSvg(svg);
+                    break;
+                case HtmlOutput html:
+                    result = PrintHtml(html);
+                    break;
+                case LatexOutput ltx:
+                    result = PrintLatex(ltx);
+                    break;
+                default:
+                    result = DefaultDisplayPrinter(input);
+                    break;
+            }
+                    return result;
+        }
+        #region Printers
+        public static BinaryOutput DefaultDisplayPrinter(object input)
+        {
+            var output = formatter.FormatObject(input);
+
+            if (output.StartsWith("Submission#"))
+            {
+                // Roslyn adds the Submission#N. as a prefix. Get rid of this
+                output = output.Substring(output.IndexOf('.') + 1);
+            }
+
+            return new BinaryOutput() { ContentType = "text/plain", Data = output};
         }
 
-        public static BinaryOutput tablePrinter(TableOutput x)
+        public static BinaryOutput PrintTable(TableOutput table)
         {
             var output = new BinaryOutput() { ContentType = "text/plain", Data = "Table printer is not yet supported!" };
             return output; 
         }
 
-        public static BinaryOutput svgPrinter(SvgOutput x)
+        public static BinaryOutput PrintSvg(SvgOutput g)
         {
-            var output = new BinaryOutput() { ContentType = "image/svg+xml", Data = x.Svg };
+            var output = new BinaryOutput() { ContentType = "image/svg+xml", Data = g.Svg };
             return output;
         }
 
-        public static BinaryOutput htmlPrinter(HtmlOutput x)
+        public static BinaryOutput PrintHtml(HtmlOutput x)
         {
             var output = new BinaryOutput() { ContentType = "text/html", Data = x.Html };
             return output;
         }
 
 
-        public static BinaryOutput htmlPrinter(LatexOutput x)
+        public static BinaryOutput PrintLatex(LatexOutput x)
         {
             var output = new BinaryOutput() { ContentType = "text/latex", Data = x.Latex };
             return output;
         }
 
         #endregion
-        public static void addDefaultDisplayPrinters()
-        {
-            
 
-            /*
-                /// Adds default display printers
-                let addDefaultDisplayPrinters() =
-
-                    // add table printer
-                    addDisplayPrinter(fun (x:TableOutput) ->
-                        let sb = StringBuilder()
-                        sb.Append("<table>") |> ignore
-
-                        // output header
-                        sb.Append("<thead>") |> ignore
-                        sb.Append("<tr>") |> ignore
-                        for col in x.Columns do
-                            sb.Append("<th>") |> ignore
-                            sb.Append(htmlEncode col) |> ignore
-                            sb.Append("</th>") |> ignore
-                        sb.Append("</tr>") |> ignore
-                        sb.Append("</thead>") |> ignore
-
-                        // output body
-                        sb.Append("<tbody>") |> ignore
-                        for row in x.Rows do
-                            sb.Append("<tr>") |> ignore
-                            for cell in row do
-                                sb.Append("<td>") |> ignore
-                                sb.Append(htmlEncode cell) |> ignore
-                                sb.Append("</td>") |> ignore
-
-                            sb.Append("</tr>") |> ignore
-                        sb.Append("<tbody>") |> ignore
-                        sb.Append("</tbody>") |> ignore
-                        sb.Append("</table>") |> ignore
-
-                        { ContentType = "text/html"; Data = sb.ToString() }
-                    )
-             */
-        }
     }
 }

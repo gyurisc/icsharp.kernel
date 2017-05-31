@@ -313,9 +313,9 @@ namespace ICSharp.Kernel
                     {
                         var lastExpression = Evaluation.GetLastExpression();
 
-                        if (!string.IsNullOrEmpty(lastExpression))
+                        if (lastExpression != null)
                         {
-                            var printedResult = Printers.defaultDisplayPrinter(lastExpression);
+                            var printedResult = Printers.PrintVariable(lastExpression);
                             sendDisplayData(printedResult.ContentType, printedResult.Data, "pyout");
                         }
                     }

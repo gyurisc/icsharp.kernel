@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICSharp.Kernel", "src\ICSha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICSharp.Console", "src\ICSharp.Console\ICSharp.Console.csproj", "{72DF0BCE-7B91-49E0-A2B7-1229883FBB2B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICSharpKernel.Tests", "ICSharpKernel.Tests\ICSharpKernel.Tests.csproj", "{EB15BB92-ADBB-445F-AFF9-D8F04711C123}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{72DF0BCE-7B91-49E0-A2B7-1229883FBB2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72DF0BCE-7B91-49E0-A2B7-1229883FBB2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72DF0BCE-7B91-49E0-A2B7-1229883FBB2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB15BB92-ADBB-445F-AFF9-D8F04711C123}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB15BB92-ADBB-445F-AFF9-D8F04711C123}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB15BB92-ADBB-445F-AFF9-D8F04711C123}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB15BB92-ADBB-445F-AFF9-D8F04711C123}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
