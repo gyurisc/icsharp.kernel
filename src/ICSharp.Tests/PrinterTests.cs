@@ -1,8 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using System.Text;
 using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ICSharp.Kernel;
 
-namespace ICSharpKernel.Tests
+namespace ICSharp.Tests
 {
     [TestClass]
     public class PrinterTests
@@ -10,7 +12,7 @@ namespace ICSharpKernel.Tests
         [TestMethod]
         public void TestPrintingSimpleList()
         {
-            List<int> numbers = new List<int>() { 1, 2, 3, 4, 5, 6};
+            List<int> numbers = new List<int>() { 1, 2, 3, 4, 5, 6 };
             var result = Printers.PrintVariable(numbers);
 
             Assert.IsInstanceOfType(result, typeof(BinaryOutput));
