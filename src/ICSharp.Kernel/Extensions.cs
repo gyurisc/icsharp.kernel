@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace ICSharp.Kernel
 {
-    class Extensions
+    public static class DisplayExtensions
     {
+        public static LatexOutput AsMath(this String str)
+        {
+            LatexOutput latex = new LatexOutput() { Latex = $"$${str}$$" };
+            return latex;
+        }
     }
 }
