@@ -86,6 +86,44 @@ namespace ICSharp.Kernel
 
         public static BinaryOutput PrintTable(TableOutput table)
         {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("<table>");
+
+            // header 
+            sb.Append("<thead>");
+            sb.Append("<tr>");
+
+            foreach (var col in table.Columns)
+            {
+                sb.Append("<th>");
+                sb.Append(htmlEncode(col));
+                sb.Append("</th>");
+            }
+
+            sb.Append("</tr>");
+            sb.Append("</thead>");
+
+            // body 
+            sb.Append("<tbody>");
+
+            foreach (var row in table.Rows)
+            {
+                sb.Append("<tr>");
+
+                foreach (var cell in row)
+                {
+                    sb.Append("<td>");
+                    sb.Append(htmlEncode(cell));
+                    sb.Append("</td>");
+                }
+
+                sb.Append("</tr>");
+            }
+
+            sb.Append("</tbody>");
+
+            sb.Append("</table>");
             var output = new BinaryOutput() { ContentType = "text/plain", Data = "Table printer is not yet supported!" };
             return output; 
         }
