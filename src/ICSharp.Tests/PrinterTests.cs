@@ -57,6 +57,6 @@ namespace ICSharp.Tests
             Assert.IsInstanceOfType(result, typeof(BinaryOutput));
             Assert.AreEqual(result.ContentType, "text/plain");
             Assert.AreEqual("PrinterTests.SimpleClass { TextField=\"Simple\" }", result.Data);
-        }
+        }   
     }
 }
