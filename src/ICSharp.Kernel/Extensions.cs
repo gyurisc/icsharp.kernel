@@ -25,15 +25,31 @@ namespace ICSharp.Kernel
             {
                 properties = properties
                     .Where(p => propertyNames.Contains(p.Name))
-                    .Select(p);
+                    .Select(p => p).ToArray();
             }
 
+            table.Columns = properties.Select(p => p.Name).ToList();
+            table.Rows = new List<List<string>>();
 
             foreach (var i in list)
             {
-
+                var row = MakeRowFormObject(i, properties);    
             }
+
             return new TableOutput();
+        }
+
+        private static List<string> MakeRowFormObject<T>(T obj, PropertyInfo[] properties)
+        {
+            List<string> result = new List<string>();
+
+            foreach (var p in properties)
+            {
+                var val = p.GetValue(obj);
+                result.Add(val.ToString());
+            }
+
+            return result;
         }
     }
 }
