@@ -33,10 +33,11 @@ namespace ICSharp.Kernel
 
             foreach (var i in list)
             {
-                var row = MakeRowFormObject(i, properties);    
+                var row = MakeRowFormObject(i, properties);
+                table.Rows.Add(row);
             }
 
-            return new TableOutput();
+            return table;
         }
 
         private static List<string> MakeRowFormObject<T>(T obj, PropertyInfo[] properties)
