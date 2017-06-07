@@ -124,7 +124,7 @@ namespace ICSharp.Kernel
             sb.Append("</tbody>");
 
             sb.Append("</table>");
-            var output = new BinaryOutput() { ContentType = "text/plain", Data = "Table printer is not yet supported!" };
+            var output = new BinaryOutput() { ContentType = "text/html", Data = sb.ToString() };
             return output; 
         }
 
