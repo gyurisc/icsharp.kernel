@@ -134,9 +134,9 @@ namespace ICSharp.Kernel
             return output;
         }
 
-        public static BinaryOutput PrintHtml(HtmlOutput x)
+        public static BinaryOutput PrintHtml(HtmlOutput input)
         {
-            var output = new BinaryOutput() { ContentType = "text/html", Data = x.Html };
+            var output = new BinaryOutput() { ContentType = "text/html", Data = input.Html };
             return output;
         }
 
