@@ -28,10 +28,8 @@ This is a [Roslyn](https://github.com/dotnet/roslyn) based C# kernel for [Jupyte
 TBA
 
 # Todo 
-
- - Make Printers work (can print lists and tables )
+ - Make Plotly work. 
  - Make intellisense work. 
-
 
 # Notes 
 
