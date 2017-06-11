@@ -29,12 +29,12 @@ namespace ICSharp.Kernel
         public string Html { get; set; }
     }
 
-
     public class SvgOutput { public string Svg { get; set; } }
 
     public class Printers
     {
         private static CSharpObjectFormatter formatter = Microsoft.CodeAnalysis.CSharp.Scripting.Hosting.CSharpObjectFormatter.Instance;
+        private static Dictionary<Type, Func<object, BinaryOutput>> customPrinters { get; set; }
 
         internal static string htmlEncode(string str)
         {
@@ -49,6 +49,13 @@ namespace ICSharp.Kernel
             }
 
             BinaryOutput result = null;
+
+            if (customPrinters.ContainsKey(input.GetType()))
+            {
+                var func = customPrinters[input.GetType()];
+                result = func(input);
+                return result;
+            }
 
             switch (input)
             {
@@ -70,6 +77,24 @@ namespace ICSharp.Kernel
             }
                     return result;
         }
+
+        static Printers()
+        {
+            customPrinters = new Dictionary<Type, Func<object, BinaryOutput>>();
+        }
+
+        public static void RegisterCustomPrinter(Type t, Func<object, BinaryOutput> callback)
+        {
+            if (!customPrinters.ContainsKey(t))
+            {
+                customPrinters.Add(t, callback);
+            }
+            else
+            {
+                customPrinters[t] = callback;
+            }
+        }
+
         #region Printers
         public static BinaryOutput DefaultDisplayPrinter(object input)
         {
@@ -146,7 +171,6 @@ namespace ICSharp.Kernel
             var output = new BinaryOutput() { ContentType = "text/latex", Data = x.Latex };
             return output;
         }
-
         #endregion
 
     }
