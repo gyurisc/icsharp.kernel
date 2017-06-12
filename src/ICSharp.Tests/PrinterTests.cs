@@ -57,6 +57,19 @@ namespace ICSharp.Tests
             Assert.IsInstanceOfType(result, typeof(BinaryOutput));
             Assert.AreEqual(result.ContentType, "text/plain");
             Assert.AreEqual("PrinterTests.SimpleClass { TextField=\"Simple\" }", result.Data);
-        }   
+        }
+
+        [TestMethod]
+        public void TestAddingCustomPrinter()
+        {
+            Func<object, BinaryOutput> SimplePrinter = s => new BinaryOutput() { ContentType = "text/simpleclass", Data = s.ToString() };
+            Printers.RegisterCustomPrinter(typeof(SimpleClass), SimplePrinter);
+
+            SimpleClass input = new SimpleClass() { TextField = "Simple" };
+
+            BinaryOutput result = Printers.PrintVariable(input);
+            Assert.IsInstanceOfType(result, typeof(BinaryOutput));
+            Assert.AreEqual(result.ContentType, "text/simpleclass");
+        }
     }
 }
