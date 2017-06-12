@@ -72,6 +72,9 @@
     <Reference Include="NetMQ">
       <HintPath>..\..\packages\NetMQ.4.0.0.1\lib\net40\NetMQ.dll</HintPath>
     </Reference>
+    <Reference Include="XPlot.Plotly, Version=1.4.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\XPlot.Plotly.1.4.2\lib\net45\XPlot.Plotly.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
