@@ -52,6 +52,7 @@
     <Compile Include="PrinterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExtensionsTest.cs" />
+    <Compile Include="ScriptTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

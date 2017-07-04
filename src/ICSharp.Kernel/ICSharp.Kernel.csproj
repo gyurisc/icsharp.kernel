@@ -78,10 +78,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Helpers\CommandLineHelpers.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="ConnectionInformation.cs" />
     <Compile Include="Evaluation.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Helpers\RuntimeMetadataReferenceResolver.cs" />
     <Compile Include="Kernel.cs" />
     <Compile Include="Messages\BlockType.cs" />
     <Compile Include="Messages\ClearOutput.cs" />

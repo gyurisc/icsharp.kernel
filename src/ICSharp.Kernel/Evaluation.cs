@@ -6,6 +6,9 @@ using Microsoft.CodeAnalysis.Scripting;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using Microsoft.CodeAnalysis.Scripting.Hosting;
+using System.Collections.Immutable;
+using Microsoft.CodeAnalysis.CSharp.Scripting.Hosting;
 
 namespace ICSharp.Kernel
 {
@@ -16,10 +19,12 @@ namespace ICSharp.Kernel
         public static StringBuilder sbErr { get; private set; } = new StringBuilder();
         public static StringBuilder sbPrint { get; private set; } = new StringBuilder();
         public static StringWriter printStream { get; private set; } = new StringWriter(sbPrint);
-        public static ScriptOptions scriptOptions { get; private set; }
+        //public static ScriptOptions scriptOptions { get; private set; }
 
-        public static ScriptState<object> scriptState = null;
-      
+        static ScriptOptions scriptOptions;
+        static ScriptState<object> state = null;
+        static InteractiveScriptGlobals globals; 
+
         static Evaluation()
         {
             Console.SetOut(printStream);
@@ -32,17 +37,29 @@ namespace ICSharp.Kernel
                 typeof(XPlot.Plotly.Graph).Assembly
             };
 
-            scriptOptions = ScriptOptions.Default.WithReferences(references);           
+            globals = new InteractiveScriptGlobals(printStream, Microsoft.CodeAnalysis.CSharp.Scripting.Hosting.CSharpObjectFormatter.Instance);
+            scriptOptions = ScriptOptions.Default.WithReferences(references);
         }
 
-        internal static void EvalInteraction(string code)
+        public static void EvalInteraction(string code)
         {
             try
             {
-                scriptState = scriptState == null ? CSharpScript.RunAsync(code, scriptOptions).Result : scriptState.ContinueWithAsync(code, scriptOptions).Result;
-                if (scriptState.ReturnValue != null && !string.IsNullOrEmpty(scriptState.ReturnValue.ToString()))
+                Script<object> newScript;
+                if (state == null)
                 {
-                    sbOut.Append(scriptState.ReturnValue.ToString());
+                    newScript = CSharpScript.Create<object>(code, scriptOptions, globals.GetType(), assemblyLoader: null);
+                }
+                else
+                {
+                    newScript = state.Script.ContinueWith(code, scriptOptions);
+                }
+
+                state = state == null ? CSharpScript.RunAsync(code, scriptOptions).Result : 
+                    state.ContinueWithAsync(code, scriptOptions).Result;
+                if (state.ReturnValue != null && !string.IsNullOrEmpty(state.ReturnValue.ToString()))
+                {
+                    sbOut.Append(state.ReturnValue.ToString());
                 }
             }
             catch (CompilationErrorException compilationError)
@@ -73,10 +90,10 @@ namespace ICSharp.Kernel
                     return (val, err.ToArray());
                 }
   
-                scriptState = scriptState == null ? CSharpScript.RunAsync(code,scriptOptions).Result : scriptState.ContinueWithAsync(code, scriptOptions).Result;
-                if (scriptState.ReturnValue != null && !string.IsNullOrEmpty(scriptState.ReturnValue.ToString()))
+                state = state == null ? CSharpScript.RunAsync(code,scriptOptions).Result : state.ContinueWithAsync(code, scriptOptions).Result;
+                if (state.ReturnValue != null && !string.IsNullOrEmpty(state.ReturnValue.ToString()))
                 {
-                    val = scriptState.ReturnValue.ToString();
+                    val = state.ReturnValue.ToString();
                 }
             }
             catch (CompilationErrorException compilationError)
@@ -93,31 +110,32 @@ namespace ICSharp.Kernel
 
         internal static object GetLastExpression()
         {
-            return scriptState?.ReturnValue; 
+            return state?.ReturnValue; 
         }
 
-        internal static void GetDeclarations(string code, int realLineNumber, int ch)
+        internal static ScriptOptions UpdateOptions(ScriptOptions options, InteractiveScriptGlobals globals)
         {
-            //ScriptState<object> state = null;
+            var currentMetadataResolver = options.MetadataResolver;
+            var currentSourceResolver = options.SourceResolver;
 
-            //try
-            //{
-            //    var script = CSharpScript.Create(code, scriptOptions);
-            //    script.Compile();
-            //    state = script.RunAsync().Result;
-               
-            //    if (scriptState.ReturnValue != null && !string.IsNullOrEmpty(scriptState.ReturnValue.ToString()))
-            //    {
-            //        var val = scriptState.ReturnValue.ToString();
-            //    }
-            //}
-            //catch (CompilationErrorException compilationError)
-            //{
-            //    foreach (var error in compilationError.Diagnostics)
-            //    {
-            //        //var err.Add(error.ToString());
-            //    }
-            //}
+            string newWorkingDirectory = Directory.GetCurrentDirectory();
+            var newReferenceSearchPaths = ImmutableArray.CreateRange(globals.ReferencePaths);
+            var newSourceSearchPaths = ImmutableArray.CreateRange(globals.SourcePaths);
+
+            // remove references and imports from the options, they have been applied and will be inherited from now on:
+            //return options.
+            //    RemoveImportsAndReferences().
+            //    WithMetadataResolver(currentMetadataResolver.
+            //        WithRelativePathResolver(
+            //            currentMetadataResolver.PathResolver.
+            //                WithBaseDirectory(newWorkingDirectory).
+            //                WithSearchPaths(newReferenceSearchPaths))).
+            //    WithSourceResolver(currentSourceResolver.
+            //            WithBaseDirectory(newWorkingDirectory).
+            //            WithSearchPaths(newSourceSearchPaths));
+            return options;
         }
+
+
     }
 }

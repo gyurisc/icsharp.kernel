@@ -381,7 +381,7 @@ namespace ICSharp.Kernel
 
 
             // TODO: Finish implementing intellisense... 
-            Evaluation.GetDeclarations(codeString, realLineNumber, position.ch);
+            // Evaluation.GetDeclarations(codeString, realLineNumber, position.ch);
             var newContent = new CompleteReply()
             {
                 matched_text = "matched text",
