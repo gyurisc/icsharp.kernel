@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace ICSharp.Tests
 {
@@ -13,7 +14,7 @@ namespace ICSharp.Tests
     {
         [TestMethod]
         public void TestSimpleExpression()
-        {
+        {           
             string add = "5 + 7";
             Evaluation.EvalInteraction(add);
 
@@ -21,6 +22,8 @@ namespace ICSharp.Tests
 
             Assert.AreEqual(result, "12");
         }
+
+
     }
 
 }

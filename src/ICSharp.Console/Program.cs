@@ -22,6 +22,8 @@ namespace ICSharp.Console
 
         static void Main(string[] args)
         {
+            Evaluation.EvalInteraction("#load \"XPlot.Plotly.csx\""); 
+
             //On Windows if you download our zip releases you files will be marked as from the Internet
             //Depending on how you extract the files this marker may be left, this will break Paket, so clear it.
             if (Environment.OSVersion.Platform != PlatformID.Unix && Environment.OSVersion.Platform != PlatformID.MacOSX)
