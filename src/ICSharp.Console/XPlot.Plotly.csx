@@ -1,10 +1,7 @@
 ﻿using System;
+using ICsharp.Kernel; 
 using XPlot.Plotly;
 
-public class HelloClass
-{
-    public void Say()
-    {
-        Console.WriteLine("Hello Class!");
-    }
-}
+Func<object, BinaryOutput> PlotlyChartPrinter = s => new BinaryOutput() { ContentType = "text/html", Data = PlotlyChartPrinter.GetInlineHtml() };
+
+Printers.RegisterCustomPrinter(typeof(PlotlyChart), PlotlyChartPrinter);
