@@ -97,7 +97,7 @@ namespace ICSharp.Kernel
                 sbOut.Append(state.ReturnValue.ToString());
             }
         }
-        
+
 
         internal static (string value, string[] errors) EvalInteractionNonThrowing(string code)
         {
@@ -105,66 +105,54 @@ namespace ICSharp.Kernel
             var err = new List<string>();
             var cancellationToken = new CancellationToken();
 
-            //try
-            //{
-                if (code.StartsWith("#help"))
+            if (code.StartsWith("#help"))
+            {
+                var icsharpHelp = "IC# notebook directives: " +
+                    "#r\t\tAdd a metadata reference to specified assembly and all its dependencies, e.g. #r \"myLib.dll\"." +
+                    "#load\t\tLoad specified script file and execute it, e.g. #load \"myScript.csx\".";
+
+                sbPrint.Append(icsharpHelp);
+
+                return (val, err.ToArray());
+            }
+
+            Script<object> newScript;
+            if (state == null)
+            {
+                newScript = CSharpScript.Create<object>(code, scriptOptions, globals.GetType(), assemblyLoader: null);
+            }
+            else
+            {
+                newScript = state.Script.ContinueWith(code, scriptOptions);
+            }
+
+            var diagnostics = newScript.Compile(cancellationToken);
+            if (diagnostics.Length > 0)
+            {
+                foreach (var error in diagnostics)
                 {
-                    var icsharpHelp = "IC# notebook directives: " +
-                        "#r\t\tAdd a metadata reference to specified assembly and all its dependencies, e.g. #r \"myLib.dll\"." +
-                        "#load\t\tLoad specified script file and execute it, e.g. #load \"myScript.csx\".";
-
-                    sbPrint.Append(icsharpHelp);
-
-                    return (val, err.ToArray());
+                    err.Add(error.ToString());
                 }
 
-                Script<object> newScript;
-                if (state == null)
-                {
-                    newScript = CSharpScript.Create<object>(code, scriptOptions, globals.GetType(), assemblyLoader: null);
-                }
-                else
-                {
-                    newScript = state.Script.ContinueWith(code, scriptOptions);
-                }
+                return (val, err.ToArray());
+            }
 
-                var diagnostics = newScript.Compile(cancellationToken);
-                if (diagnostics.Length > 0)
-                {
-                    foreach (var error in diagnostics)
-                    {
-                        err.Add(error.ToString());
-                    }
+            var task = (state == null) ?
+                newScript.RunAsync(globals, catchException: e => true, cancellationToken: cancellationToken) :
+                newScript.RunFromAsync(state, catchException: e => true, cancellationToken: cancellationToken);
 
-                    return (val, err.ToArray());
-                }
+            state = task.GetAwaiter().GetResult();
 
-                var task = (state == null) ?
-                    newScript.RunAsync(globals, catchException: e => true, cancellationToken: cancellationToken) :
-                    newScript.RunFromAsync(state, catchException: e => true, cancellationToken: cancellationToken);
+            if (state.Exception != null)
+            {
+                err.Add(state.Exception.ToString());
+            }
 
-                state = task.GetAwaiter().GetResult();
-
-                if (state.Exception != null)
-                {
-                    err.Add(state.Exception.ToString());
-                }
-
-                //state = state == null ? CSharpScript.RunAsync(code,scriptOptions).Result : state.ContinueWithAsync(code, scriptOptions).Result;
-                if (state.ReturnValue != null && !string.IsNullOrEmpty(state.ReturnValue.ToString()))
-                {
-                    val = state.ReturnValue.ToString();
-                }
-            //}
-            //catch (CompilationErrorException compilationError)
-            //{
-            //    foreach(var error in compilationError.Diagnostics)
-            //    {
-            //        err.Add(error.ToString());
-            //    }         
-            //}
-
-            
+            //state = state == null ? CSharpScript.RunAsync(code,scriptOptions).Result : state.ContinueWithAsync(code, scriptOptions).Result;
+            if (state.ReturnValue != null && !string.IsNullOrEmpty(state.ReturnValue.ToString()))
+            {
+                val = state.ReturnValue.ToString();
+            }
 
             return (val, err.ToArray());
         }
