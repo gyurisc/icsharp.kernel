@@ -36,7 +36,7 @@ namespace ICSharp.Kernel
             var references = new Assembly[] {
                 typeof(System.Linq.Enumerable).Assembly,
                 typeof(System.Text.ASCIIEncoding).Assembly,
-                typeof(ICSharp.Kernel.Kernel).Assembly
+                typeof(ICSharp.Kernel.Kernel).Assembly,
                 typeof(XPlot.Plotly.Graph).Assembly
             };
 
