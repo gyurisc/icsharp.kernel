@@ -105,9 +105,112 @@ namespace ICSharp.Kernel
         {
             var text = new StringBuilder();
 
+            var props = value.GetType().GetProperties().OrderBy(x => x.Name).ToArray();
+            var meths = value.GetType().GetMethods().OrderBy(x => x.Name).ToArray();
+
+            string GetTypeText(Type t)
+            {
+                var tText = new StringBuilder();
+                tText.Append(Blue);
+                tText.Append(t.Name);
+
+
+                return text.Append(Reset).ToString();
+            }
+
+            string GetPropertyText(PropertyInfo p)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append(GetTypeText(p.PropertyType));
+                sb.Append(" : ");
+                sb.Append(p.Name);
+                sb.Append(";");
+                return sb.ToString();
+            }
+
+            string GetParameterInfoText(ParameterInfo p)
+            {
+                var sb = new StringBuilder();
+
+                if (p.IsOptional) sb.Append("? ");
+                if (p.IsOut) sb.Append("out ");
+
+                sb.Append(p.GetType().Name)
+                    .Append(" ")
+                    .Append(p.Name)
+                    .Append(" ");
+
+                if (p.HasDefaultValue)
+                {
+                    sb.Append("= ")
+                        .Append(p.DefaultValue)
+                        .Append(" ");
+                }
+
+                return sb.ToString().Trim();
+            }
+
+            string GetMethodText(MethodInfo m)
+            {
+                var sb = new StringBuilder();
+                var _params = String.Join(",", m.GetParameters().Select(p => GetParameterInfoText(p)));
+                sb.Append(m.ReturnType.ToString())
+                    .Append(" ")
+                    .Append(m.Name)
+                    .Append("(")
+
+                    .Append(");");
+                return sb.ToString();
+            }
+
+
+            // type information
+            text.Append(Blue)
+                .Append("Type: ")
+                .AppendLine(value.GetType().FullName)
+                .Append(Reset);
+
+            //output properties 
+            text.AppendLine();
+            text.Append(Red)
+                .AppendLine("Properties")
+                .Append(Reset);
+
+            foreach (PropertyInfo p in props)
+            {
+                text.AppendLine(GetPropertyText(p));
+            }
+
+            // methods 
+            text.AppendLine();
+            text.Append(Red)
+                .AppendLine("Methods")
+                .Append(Reset);
+
+            foreach (var m in meths)
+            {
+                text.Append(GetMethodText(m));
+            }
+
             // adding to the payload
             kernel.AddPayload(text.ToString());
         }
+
+        public static void Display(object value)
+        {
+            if (value != null)
+            {
+                if (Evaluation.sbPrint != null && Evaluation.sbPrint.Length > 0)
+                {
+                    kernel.SendDisplayData("text/plain", Evaluation.sbPrint.ToString());
+                    Evaluation.sbPrint.Clear();
+                }
+
+                BinaryOutput output = Printers.PrintVariable(value);
+                kernel.SendDisplayData(output.ContentType, output.Data);
+            }
+        }
+
         private static void Install(bool forceInstall)
         {
             var thisExecutable = Assembly.GetEntryAssembly().Location;
