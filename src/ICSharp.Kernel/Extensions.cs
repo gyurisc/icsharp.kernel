@@ -20,6 +20,7 @@ namespace ICSharp.Kernel
             HtmlOutput html = new HtmlOutput() { Html = str };
             return html; 
         }
+        
         public static TableOutput AsTable<T>(this IEnumerable<T> list, List<string> propertyNames = null)
         {
             var table = new TableOutput();

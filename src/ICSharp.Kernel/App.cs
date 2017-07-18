@@ -196,6 +196,14 @@ namespace ICSharp.Kernel
             kernel.AddPayload(text.ToString());
         }
 
+        public static string ReadFileFromSourceDirectory(string fileName)
+        {
+            var file = new FileInfo(Assembly.GetEntryAssembly().Location);
+            var dir = file.Directory.FullName;
+            var content = System.IO.File.ReadAllText(dir + "/" + fileName);
+
+            return content;
+        }
         public static void Display(object value)
         {
             if (value != null)
