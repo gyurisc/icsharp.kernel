@@ -48,5 +48,30 @@ var plotly_min_js = App.ReadFileFromSourceDirectory("plotly-latest.min.js");
 script = script.Replace("%s", plotly_min_js);
 App.Display(script.AsHtml());
 
-// more to come... 
+public static string GetPngHtml(this PlotlyChart chart)
+{
+    string html = chart.GetInlineHtml();
+    return html
+        .Replace("Plotly.newPlot(", "Plotly.plot(")
+        .Replace("data, layout);", "data, layout).then(ifsharpMakePng);");
+}
 
+public static string GetSvgHtml(this PlotlyChart chart)
+{
+    string html = chart.GetInlineHtml();
+    return html
+        .Replace("Plotly.newPlot(", "Plotly.plot(")
+        .Replace(
+            "data, layout);",
+            "data, layout).then(ifsharpMakeSvg);");
+}
+
+// TODO: This is not working need to understand this error... 
+// (9,1): error CS1929: 'PlotlyChart' does not contain a definition for 'Png' and the best extension method overload 'Png(PlotlyChart)' requires a receiver of type 'PlotlyChart'
+public static BinaryOutput Png(this PlotlyChart chart) =>
+    new BinaryOutput() { ContentType = "text/html", Data = chart.GetPngHtml() };
+
+// TODO: This is not working need to understand this error... 
+// (9,1): error CS1929: 'PlotlyChart' does not contain a definition for 'Svg' and the best extension method overload 'Svg(PlotlyChart)' requires a receiver of type 'PlotlyChart'
+public static BinaryOutput Svg(this PlotlyChart chart) =>
+    new BinaryOutput() { ContentType = "text/html", Data = chart.GetSvgHtml() };
