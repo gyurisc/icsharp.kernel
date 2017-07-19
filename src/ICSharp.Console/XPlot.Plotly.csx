@@ -9,7 +9,7 @@ Func<object, BinaryOutput> PlotlyChartPrinter = s => new BinaryOutput() { Conten
 Printers.RegisterCustomPrinter(typeof(PlotlyChart), PlotlyChartPrinter);
 
 string script = @" 
-<script type=""text / javascript"">
+<script type=""text/javascript"">
 var require_save = require;
 var requirejs_save = requirejs;
 var define_save = define;
@@ -40,6 +40,7 @@ function ifsharpMakeSvg(gd)
 {
     return ifsharpMakeImage(gd, 'svg');
 }
+
 </script>";
 
 var plotly_min_js = App.ReadFileFromSourceDirectory("plotly-latest.min.js");
