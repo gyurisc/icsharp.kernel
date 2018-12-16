@@ -440,12 +440,21 @@ namespace ICSharp.Kernel
 
         internal void doShell()
         {
-            var preprocessedCode = preprocessCode(headerCode); // not sure if this is needed 
+            try
+            {
+                var preprocessedCode = preprocessCode(headerCode); // not sure if this is needed 
 
-            Evaluation.EvalInteraction(preprocessedCode);
+                Evaluation.EvalInteraction(preprocessedCode);
 
-            logMessage(Evaluation.sbErr.ToString());
-            logMessage(Evaluation.sbOut.ToString());
+                logMessage(Evaluation.sbErr.ToString());
+                logMessage(Evaluation.sbOut.ToString());
+            }
+            catch (Exception ex)
+            {
+                // failed at executing header code. 
+                handleException(ex);
+            }
+
 
             while (true)
             {
