@@ -108,8 +108,8 @@ namespace ICSharp.Kernel
             if (code.StartsWith("#help"))
             {
                 var icsharpHelp = "IC# notebook directives: " +
-                    "#r\t\tAdd a metadata reference to specified assembly and all its dependencies, e.g. #r \"myLib.dll\"." +
-                    "#load\t\tLoad specified script file and execute it, e.g. #load \"myScript.csx\".";
+                    "\r\n#r\tAdd a metadata reference to specified assembly and all its dependencies, e.g. #r \"myLib.dll\"." +
+                    "\r\n#load\tLoad specified script file and execute it, e.g. #load \"myScript.csx\".";
 
                 sbPrint.Append(icsharpHelp);
 
